@@ -8,6 +8,7 @@ public class DashMechanic : MonoBehaviour
 
     public float dashSpeed;
     public float dashTime;
+    private bool canDash = true;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,7 @@ public class DashMechanic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && canDash)
         {
             StartCoroutine(Dash());
         }
@@ -26,11 +27,14 @@ public class DashMechanic : MonoBehaviour
 
     IEnumerator Dash()
     {
+        canDash = false;
         float startTime = Time.time;
         while(Time.time < startTime + dashTime)
         {
             movementScript.charController.Move(movementScript.movement * dashSpeed * Time.deltaTime);
             yield return null;
         }
+        yield return new WaitForSeconds(2f);
+        canDash = true;
     }
 }

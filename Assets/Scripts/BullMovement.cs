@@ -15,6 +15,7 @@ public class BullMovement : MonoBehaviour
     private bool invincibility = false;
     
     private Vector3 playerPosition;
+    private Vector3 direction;
     private int targetsLeft = 2;
     private float distance;
     public HealthController hc;
@@ -50,16 +51,17 @@ public class BullMovement : MonoBehaviour
     private void Charge(float distance) {
         if(finishingRun == false)
         {
-            Vector3 direction = (player.transform.position - transform.position).normalized;
+            direction = (player.transform.position - transform.position).normalized;
             this.gameObject.GetComponent<Rigidbody>().velocity = direction * speed;
-            transform.LookAt(player.transform.position);
+            Vector3 targetPosition = new Vector3( player.transform.position.x, this.transform.position.y, player.transform.position.z);
+            transform.LookAt(targetPosition);
         }
         else
         {
-            //this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.up * speed * Time.deltaTime;
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            this.gameObject.GetComponent<Rigidbody>().velocity = direction * speed;
+            //transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
-        if(runThroughStarted == false && distance < 40f)
+        if(runThroughStarted == false && distance < 70f)
         { 
             StartCoroutine(RunThroughPlayer());
         }
@@ -68,7 +70,8 @@ public class BullMovement : MonoBehaviour
     private void LockPlayerPosition() {
         
         playerPosition = player.transform.position;
-        transform.LookAt(playerPosition);
+        Vector3 targetPosition = new Vector3( player.transform.position.x, this.transform.position.y, player.transform.position.z);
+        transform.LookAt(targetPosition);
         playerLocked = true;
         StartCoroutine(PlayerWait());
     }
@@ -77,6 +80,9 @@ public class BullMovement : MonoBehaviour
     {
         if(collision.gameObject.tag == "Arena")
         {
+            this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            Vector3 targetPosition = new Vector3( player.transform.position.x, this.transform.position.y, player.transform.position.z);
+            transform.LookAt(targetPosition);
             finishingRun = false;
             StartCoroutine(Cooldown());
         }
@@ -110,9 +116,11 @@ public class BullMovement : MonoBehaviour
     IEnumerator RunThroughPlayer() {
         Debug.Log("RUNNING THROUGH");
         runThroughStarted = true;
+        yield return new WaitForSeconds(.25f);
         finishingRun = true;
-        yield return new WaitForSeconds(6f);
-        transform.LookAt(playerPosition);
+        yield return new WaitForSeconds(5f);
+        Vector3 targetPosition = new Vector3( player.transform.position.x, this.transform.position.y, player.transform.position.z);
+        transform.LookAt(targetPosition);
         finishingRun = false;
         runThroughStarted = false;
     }

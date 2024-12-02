@@ -11,6 +11,7 @@ public class TimerUpdate : MonoBehaviour
     public float timeRemaining = 0;
     public bool timeIsRunning = true;
     private bool timerStarted = false;
+    public CaptureData cd;
     public TMP_Text timeText;
     // Start is called before the first frame update
     void Start()
@@ -42,8 +43,9 @@ public class TimerUpdate : MonoBehaviour
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
-        if(seconds == 45f)
+        if(seconds == 45f && SceneManager.GetActiveScene().name == "TimedPrototype")
         {
+            cd.SaveData("Completed Timed Mode\n");
             SceneManager.LoadScene("YouWon");
         }
     }

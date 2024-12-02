@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,6 +20,8 @@ public class BullMovement : MonoBehaviour
     private int targetsLeft = 2;
     private float distance;
     public HealthController hc;
+    public CaptureData cd;
+    public TMP_Text timeText;
 
 
     void Start()
@@ -34,6 +37,7 @@ public class BullMovement : MonoBehaviour
     {
         if(targetsLeft == 0)
         {
+            cd.SaveData("Completed Target Mode in " + timeText.text + "\n");
             SceneManager.LoadScene("YouWon");
         }
 
@@ -61,7 +65,7 @@ public class BullMovement : MonoBehaviour
             this.gameObject.GetComponent<Rigidbody>().velocity = direction * speed;
             //transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
-        if(runThroughStarted == false && distance < 70f)
+        if(runThroughStarted == false && distance < 80f)
         { 
             StartCoroutine(RunThroughPlayer());
         }
@@ -118,7 +122,7 @@ public class BullMovement : MonoBehaviour
         runThroughStarted = true;
         yield return new WaitForSeconds(.25f);
         finishingRun = true;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         Vector3 targetPosition = new Vector3( player.transform.position.x, this.transform.position.y, player.transform.position.z);
         transform.LookAt(targetPosition);
         finishingRun = false;

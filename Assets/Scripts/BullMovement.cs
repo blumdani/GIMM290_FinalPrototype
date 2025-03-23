@@ -52,19 +52,25 @@ public class BullMovement : MonoBehaviour
         }
     }
 
+
+    //Get the direction of the player, then apply that direction to the bull's rigidbody velocity.
     private void Charge(float distance) {
+        //If the bull is still far enough to track the player's distance, update the direction. Otherwise, only update the velocity.
         if(finishingRun == false)
         {
             direction = (player.transform.position - transform.position).normalized;
             this.gameObject.GetComponent<Rigidbody>().velocity = direction * speed;
-            Vector3 targetPosition = new Vector3( player.transform.position.x, this.transform.position.y, player.transform.position.z);
+            
+            //Keep the bull from applying any y-axis movement.
+            Vector3 targetPosition = new Vector3(player.transform.position.x, this.transform.position.y, player.transform.position.z);
             transform.LookAt(targetPosition);
         }
         else
         {
             this.gameObject.GetComponent<Rigidbody>().velocity = direction * speed;
-            //transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
+
+        //If the bull is close enough to the player, start the run through
         if(runThroughStarted == false && distance < 80f)
         { 
             StartCoroutine(RunThroughPlayer());
@@ -117,8 +123,8 @@ public class BullMovement : MonoBehaviour
         playerLocked = false;
     }
 
+    //When close enough to the player, lock the bull's direction and continue running.
     IEnumerator RunThroughPlayer() {
-        Debug.Log("RUNNING THROUGH");
         runThroughStarted = true;
         yield return new WaitForSeconds(.25f);
         finishingRun = true;
@@ -135,6 +141,7 @@ public class BullMovement : MonoBehaviour
         cooldownOn = false;
     }
 
+    //Momentarily remove BoxCollider to allow the player to pass through the bull.
     IEnumerator PlayerPassThrough() {
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
         yield return new WaitForSeconds(.3f);

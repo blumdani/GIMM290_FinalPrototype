@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6383193009468150494}
   - component: {fileID: 1287283501446772597}
   - component: {fileID: 4707684084174187181}
-  - component: {fileID: 1449068072517393749}
   - component: {fileID: 7787762258153311406}
   m_Layer: 0
   m_Name: Bull
@@ -113,21 +112,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 1
---- !u!114 &1449068072517393749
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1603502573668510197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 015d1844c07e9604e914a19013feb887, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  speed: 130
-  hc: {fileID: 0}
 --- !u!65 &7787762258153311406
 BoxCollider:
   m_ObjectHideFlags: 0

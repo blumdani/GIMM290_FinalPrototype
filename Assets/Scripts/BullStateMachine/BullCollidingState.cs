@@ -9,7 +9,11 @@ public class BullCollidingState : BullBaseState
     private int speed;
     private bool approachingPlayer = true;
 
+    //Health management
+    private HealthController hc;
+    public bool invincible;
     public GameObject player;
+    
 
     public override void EnterState(BullStateManager bull)
     {
@@ -17,6 +21,8 @@ public class BullCollidingState : BullBaseState
         //Match charging state speed.
         BullChargingState chargingState = bull.chargingState;
         speed = chargingState.speed;
+
+        hc = GameObject.Find("HealthController").GetComponent<HealthController>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -32,7 +38,16 @@ public class BullCollidingState : BullBaseState
         if(collision.gameObject.tag == "Player")
         {
             //Damage Player (trigger invincibility, remove health, move through player correctly)
+            if(!invincible)
+            {
+                Debug.Log("Player hit");
+                hc.TakeDamage();
+                invincible = true;
+            }
             player.GetComponent<CapsuleCollider>().enabled = false;
+
+            //When player is still, the bull will pass underneath it and the player will fly in the air. For now, briefly disable the bull collider as well until the player collider is disabled.
+            bull.StartCoroutine(BullColliderDisable(bull));
         }
 
         //Arena collision
@@ -48,5 +63,12 @@ public class BullCollidingState : BullBaseState
 
             //To Do: In a target manager, reduce the number of targets by 1 and check if all targets were made inactive.
         }
+    }
+
+    IEnumerator BullColliderDisable(BullStateManager bull)
+    {
+        bull.GetComponent<BoxCollider>().enabled = false;
+        yield return new WaitForSeconds(.1f);
+        bull.GetComponent<BoxCollider>().enabled = true;
     }
 }

@@ -20,9 +20,11 @@ public class BullResettingState : BullBaseState
         bull.GetComponent<Rigidbody>().velocity = Vector3.zero;
         bull.StartCoroutine(InitialPause());
         player = GameObject.FindGameObjectWithTag("Player");
-        
-        //Since the collider may have been temporarily disabled after collision, make sure it is now enabled.
+
+        //Since the collider may have been temporarily disabled after collision and taken damage, make sure things are appropriately reset.
         player.GetComponent<CapsuleCollider>().enabled = true;
+        BullCollidingState collidingstate = bull.collidingState;
+        collidingstate.invincible = false;
     }
     
     //Starting state, or state when the bull has just finished a run (by colliding with the arena) and is about to charge again.

@@ -10,15 +10,22 @@ public class BullResettingState : BullBaseState
     public bool isResetting;
     public GameObject player;
 
+    private float delay;
+
     public override void EnterState(BullStateManager bull)
     {
         Debug.Log("Entered Resetting state");
         //Start cooldown on entering state
         isResetting = true;
 
+        //Stop particle system and reset the prewarm counter
+        bull.dustFront.Stop();
+        bull.dustBack.Stop();
+        delay = 0;
+        
         //Reset bull velocity to zero and add a quick cooldown so the bull is not constantly moving.
         bull.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        bull.StartCoroutine(InitialPause());
+        bull.StartCoroutine(InitialPause(bull));
         player = GameObject.FindGameObjectWithTag("Player");
 
         //Since the collider may have been temporarily disabled after collision and taken damage, make sure things are appropriately reset.
@@ -40,6 +47,9 @@ public class BullResettingState : BullBaseState
             //Once the initial pause is over, transition to the charging state
             bull.SwitchState(bull.chargingState);
         }
+
+
+        
     }
 
     public override void OnCollisionEnter(BullStateManager bull, Collision collision)
@@ -47,13 +57,16 @@ public class BullResettingState : BullBaseState
         //Collisions will only happen in colliding state
     }
 
-    IEnumerator InitialPause()
+    IEnumerator InitialPause(BullStateManager bull)
     {
         //random delay between 1 and 3 seconds
         System.Random rng = new System.Random();
-        int delay = rng.Next(1, 4);
+        delay = rng.Next(1, 4);
 
         yield return new WaitForSeconds(delay);
         isResetting = false;
+
+        bull.dustFront.Play();
+        bull.dustBack.Play();
     }
 }

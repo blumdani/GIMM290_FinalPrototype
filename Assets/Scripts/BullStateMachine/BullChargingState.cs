@@ -10,21 +10,31 @@ public class BullChargingState : BullBaseState
 
     public GameObject player;
     private float distance;
-    [SerializeField] private float runthroughDistance = 75f;
+    [SerializeField] private float runthroughDistance = 55f;
     
     //State where bull is charging toward the player but not close enough to trigger runthrough (and also has not collided with anything)
     public override void EnterState(BullStateManager bull)
     {
         Debug.Log("Entered charging state");
         //Set speed for the next charge
+
         System.Random rng = new System.Random();
-        speed = rng.Next(150, 165);
+        speed = rng.Next(190, 215);
         player = GameObject.FindGameObjectWithTag("Player");
     }
     
     public override void UpdateState(BullStateManager bull)
     {
         //Start running, update direction to continue to chase player
+        if (!bull.dustFront.isPlaying)
+        {
+            bull.dustFront.Play();
+        }
+        if (!bull.dustBack.isPlaying)
+        {
+            bull.dustBack.Play();
+        }
+
         direction = (player.transform.position - bull.transform.position).normalized;
         bull.GetComponent<Rigidbody>().velocity = direction * speed;
 

@@ -13,7 +13,6 @@ public class BullCollidingState : BullBaseState
     private HealthController hc;
     public bool invincible;
     public GameObject player;
-    
 
     public override void EnterState(BullStateManager bull)
     {
@@ -28,6 +27,16 @@ public class BullCollidingState : BullBaseState
 
     public override void UpdateState(BullStateManager bull)
     {
+        //Keep particle system active until the bull stops
+        if (!bull.dustFront.isPlaying)
+        {
+           bull.dustFront.Play();
+        }
+        if (!bull.dustBack.isPlaying)
+        {
+            bull.dustBack.Play();
+        }
+
         //Continue to move forward in the direction the bull is currently facing.
         bull.GetComponent<Rigidbody>().velocity = bull.transform.forward * speed;
     }
@@ -68,7 +77,7 @@ public class BullCollidingState : BullBaseState
     IEnumerator BullColliderDisable(BullStateManager bull)
     {
         bull.GetComponent<BoxCollider>().enabled = false;
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(.05f);
         bull.GetComponent<BoxCollider>().enabled = true;
     }
 }

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Arena
   - Target
+  - Bull_Dust_Front
+  - Bull_Dust_Back
   layers:
   - Default
   - TransparentFX

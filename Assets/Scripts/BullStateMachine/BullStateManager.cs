@@ -8,6 +8,7 @@ public class BullStateManager : MonoBehaviour
     public BullChargingState chargingState = new BullChargingState();
     public BullResettingState resettingState = new BullResettingState();
     public BullCollidingState collidingState = new BullCollidingState();
+    public BullInjuredState injuredState = new BullInjuredState();
 
     // Public variables to be accessed by states, set in Unity
     public ParticleSystem dustFront;

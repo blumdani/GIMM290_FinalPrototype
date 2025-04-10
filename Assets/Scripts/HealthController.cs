@@ -15,14 +15,14 @@ public class HealthController : MonoBehaviour
 
     //For damage effect overlay
     public Image overlay;
-    public float fadeSpeed = 1f;
-    public float duration = .75f;
+    public float fadeSpeed = .75f;
+    public float duration = .5f;
     private float durationTimer;
 
     void Start()
     {
         health = 60;
-        healthbar = GameObject.Find("HealthGreen").GetComponent<Image>();
+        healthbar = GameObject.Find("PlayerHealthGreen").GetComponent<Image>();
         overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 0);
     }
 

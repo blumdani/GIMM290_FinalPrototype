@@ -8,6 +8,9 @@ public class BullChargingState : BullBaseState
     private Vector3 direction;
     public int speed;
 
+    private Animation animation;
+    private Animator animator;
+
     public GameObject player;
     private float distance;
     [SerializeField] private float runthroughDistance = 55f;
@@ -21,6 +24,10 @@ public class BullChargingState : BullBaseState
         System.Random rng = new System.Random();
         speed = rng.Next(190, 215);
         player = GameObject.FindGameObjectWithTag("Player");
+
+        animation = bull.GetComponent<Animation>();
+        animator = bull.GetComponent<Animator>();
+        animator.SetBool("charging", true);
     }
     
     public override void UpdateState(BullStateManager bull)
@@ -34,6 +41,7 @@ public class BullChargingState : BullBaseState
         {
             bull.dustBack.Play();
         }
+        
 
         direction = (player.transform.position - bull.transform.position).normalized;
         bull.GetComponent<Rigidbody>().velocity = direction * speed;

@@ -10,28 +10,19 @@ public class BullInjuredState : BullBaseState
 
     public override void EnterState(BullStateManager bull)
     {
+       //Stop bull animations, look at player. TODO: Add animation for bull to lean forward
        target = GameObject.FindGameObjectWithTag("Player").transform; 
        Debug.Log("Entered Injured state");
        bull.dustFront.Stop();
        bull.dustBack.Stop();
+
+       Vector3 targetPosition = new Vector3(target.transform.position.x, bull.transform.position.y, target.transform.position.z);
+       bull.transform.LookAt(targetPosition);
     }
 
     public override void UpdateState(BullStateManager bull)
     {
-       // Determine which direction to rotate towards
-        Vector3 targetDirection = target.position - bull.transform.position;
-
-        // The step size is equal to speed times frame time.
-        float singleStep = rotationSpeed * Time.deltaTime;
-
-        // Rotate the forward vector towards the target direction by one step
-        Vector3 newDirection = Vector3.RotateTowards(bull.transform.forward, targetDirection, singleStep, 0.0f);
-
-        // Draw a ray pointing at our target in
-        Debug.DrawRay(bull.transform.position, newDirection, Color.red);
-
-        // Calculate a rotation a step closer to the target and applies rotation to this object
-        bull.transform.rotation = Quaternion.LookRotation(newDirection);
+       //Nothing for update. The bull will remain stationary until the player attacks it.
     }
 
     public override void OnCollisionEnter(BullStateManager bull, Collision collision)

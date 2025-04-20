@@ -148,7 +148,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5166347}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 109401838965ae143ab91c19dd15a137, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 1b3fdf74f3e949d469005ad8bfcbea4e, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 1692777836}
@@ -159,7 +159,7 @@ VideoPlayer:
   m_RenderMode: 1
   m_AspectRatio: 5
   m_DataSource: 0
-  m_TimeUpdateMode: 2
+  m_TimeUpdateMode: 1
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
   m_TargetAudioSources:
@@ -170,10 +170,10 @@ VideoPlayer:
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00
   m_ControlledAudioTrackCount: 1
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_SkipOnDrop: 1
   m_Looping: 0
-  m_WaitForFirstFrame: 1
+  m_WaitForFirstFrame: 0
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
 --- !u!4 &5166349
@@ -365,6 +365,7 @@ GameObject:
   - component: {fileID: 1692777836}
   - component: {fileID: 1692777835}
   - component: {fileID: 1692777838}
+  - component: {fileID: 1692777839}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -458,6 +459,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4f9b87d5bb47454ba750a21566ea5e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1692777839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692777834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f30c9543605fd14ca30084a56a88261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  video: {fileID: 5166348}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

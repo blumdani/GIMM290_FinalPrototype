@@ -4,7 +4,7 @@ using TMPro;
 public class BullStateManager : MonoBehaviour
 {
     //State machine variables for the bull
-    BullBaseState currentState;
+    public BullBaseState currentState;
     public BullChargingState chargingState = new BullChargingState();
     public BullResettingState resettingState = new BullResettingState();
     public BullCollidingState collidingState = new BullCollidingState();

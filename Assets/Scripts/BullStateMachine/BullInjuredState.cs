@@ -7,17 +7,26 @@ public class BullInjuredState : BullBaseState
     //Grab player transform to use for rotation
     public Transform target;
     public float rotationSpeed = 3.0f;
+    private GameObject dustFront;
+    private GameObject dustBack;
+
+    private Animator animator;
 
     public override void EnterState(BullStateManager bull)
     {
-       //Stop bull animations, look at player. TODO: Add animation for bull to lean forward
-       target = GameObject.FindGameObjectWithTag("Player").transform; 
-       Debug.Log("Entered Injured state");
-       bull.dustFront.Stop();
-       bull.dustBack.Stop();
+      //Stop bull animations, look at player. TODO: Add animation for bull to lean forward
+      target = GameObject.FindGameObjectWithTag("Player").transform; 
+      Debug.Log("Entered Injured state");
+      dustFront = GameObject.FindGameObjectWithTag("Bull_Dust_Front");
+      dustBack = GameObject.FindGameObjectWithTag("Bull_Dust_Back");
+      dustFront.SetActive(false);
+      dustBack.SetActive(false);
 
-       Vector3 targetPosition = new Vector3(target.transform.position.x, bull.transform.position.y, target.transform.position.z);
-       bull.transform.LookAt(targetPosition);
+      Vector3 targetPosition = new Vector3(target.transform.position.x, bull.transform.position.y, target.transform.position.z);
+      bull.transform.LookAt(targetPosition);
+
+      animator = GameObject.FindGameObjectWithTag("Bull").GetComponent<Animator>();
+      animator.SetBool("injured", true);
     }
 
     public override void UpdateState(BullStateManager bull)

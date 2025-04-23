@@ -7,8 +7,6 @@ public class BullChargingState : BullBaseState
 {
     private Vector3 direction;
     public int speed;
-
-    private Animation animation;
     private Animator animator;
 
     public GameObject player;
@@ -25,8 +23,7 @@ public class BullChargingState : BullBaseState
         speed = rng.Next(190, 215);
         player = GameObject.FindGameObjectWithTag("Player");
 
-        animation = bull.GetComponent<Animation>();
-        animator = bull.GetComponent<Animator>();
+        animator = GameObject.FindGameObjectWithTag("Bull").GetComponent<Animator>();
         animator.SetBool("charging", true);
     }
     

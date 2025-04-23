@@ -9,6 +9,8 @@ public class BullCollidingState : BullBaseState
     private int speed;
     private bool approachingPlayer = true;
 
+    private Animator animator;
+
     //Health management
     private HealthController hc;
     private BullHealthController bhc;
@@ -22,8 +24,11 @@ public class BullCollidingState : BullBaseState
         BullChargingState chargingState = bull.chargingState;
         speed = chargingState.speed;
 
+        animator = bull.GetComponent<Animator>();
+
+
         hc = GameObject.Find("HealthController").GetComponent<HealthController>();
-        bhc = GameObject.Find("Bull").GetComponent<BullHealthController>();
+        bhc = GameObject.Find("FinalBullMesh").GetComponent<BullHealthController>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -64,6 +69,7 @@ public class BullCollidingState : BullBaseState
         //Arena collision
         if(collision.gameObject.tag == "Arena")
         {
+            animator.SetBool("charging", false);
             bull.SwitchState(bull.resettingState);
             bhc.BullDamage();
             if(BullHealthController.health <= 0)

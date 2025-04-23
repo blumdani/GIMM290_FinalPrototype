@@ -9,7 +9,7 @@ public class HealthController : MonoBehaviour
 {
     public static HealthController Instance;
     public Image healthbar;
-    public static float health = 60;
+    public static float health = 80;
     public CaptureData cd;
     public TMP_Text timeText;
 
@@ -21,7 +21,7 @@ public class HealthController : MonoBehaviour
 
     void Start()
     {
-        health = 60;
+        health = 80;
         healthbar = GameObject.Find("PlayerHealthGreen").GetComponent<Image>();
         overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 0);
     }
@@ -53,6 +53,6 @@ public class HealthController : MonoBehaviour
         cd.SaveData("Took damage at " + timeText.text + "\n");
         overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 1);
         health -= 20;
-        healthbar.fillAmount = health / 60;
+        healthbar.fillAmount = health / 80;
     }
 }

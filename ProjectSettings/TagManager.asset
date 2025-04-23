@@ -8,6 +8,7 @@ TagManager:
   - Target
   - Bull_Dust_Front
   - Bull_Dust_Back
+  - Bull
   layers:
   - Default
   - TransparentFX

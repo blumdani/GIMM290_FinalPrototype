@@ -5,7 +5,7 @@ using TMPro;
 
 public class MatchStart : MonoBehaviour
 {
-    public TMP_Text leftClick;
+    public TMP_Text pressW;
     public GameObject timer;
     public GameObject bull;
     public GameObject player;
@@ -13,12 +13,12 @@ public class MatchStart : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetKeyDown(KeyCode.W))
         {
             player.GetComponent<CharacterController>().enabled = true;
             bull.GetComponent<BullStateManager>().enabled = true;
-            leftClick.text = "";
-            timer.SetActive(true);
+            pressW.text = "";
+            //timer.SetActive(true);
         }
     }
 }

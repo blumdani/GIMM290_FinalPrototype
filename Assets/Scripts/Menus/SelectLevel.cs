@@ -11,8 +11,9 @@ public class SelectLevel : MonoBehaviour
 {
     public TextMeshProUGUI instructions;
     public Button controls;
-    public TextMeshProUGUI exitGame;
+    public Button exitGame;
     public Button playGame;
+    public Button backToMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -25,8 +26,6 @@ public class SelectLevel : MonoBehaviour
     {
         if(this.gameObject.name == "PlayGame")
         {
-            //Reset the bull health to 140
-            BullHealthController.health = 140;
             SceneManager.LoadScene("TimedPrototype");
         }
         else if(this.gameObject.name == "Controls")
@@ -36,14 +35,12 @@ public class SelectLevel : MonoBehaviour
         }
         else if(this.gameObject.name == "ExitGame")
         {
-            if(exitGame.text == "Exit Game")
-            {
-                Application.Quit();
-            }
-            else if(exitGame.text == "Back to Main Menu")
-            {
-                LoadMainMenu();
-            }
+            Application.Quit();
+        }
+        else if(this.gameObject.name == "BackToMenu")
+        {
+            //Display Main Menu
+            LoadMainMenu();
         }
     }
 
@@ -52,8 +49,8 @@ public class SelectLevel : MonoBehaviour
         instructions.text = "";
         controls.gameObject.SetActive(true);
         playGame.gameObject.SetActive(true);
-        exitGame.text = "Exit Game";
-        exitGame.fontSize = 20;
+        exitGame.gameObject.SetActive(true);
+        backToMenu.gameObject.SetActive(false);
     }
 
     private void LoadControlsScreen()
@@ -61,7 +58,7 @@ public class SelectLevel : MonoBehaviour
         instructions.text = "WASD - Move \nMouse - Look \nLeft Click - Quick Step \nF - Attack Bull (once injured)";
         controls.gameObject.SetActive(false);
         playGame.gameObject.SetActive(false);
-        exitGame.text = "Back to Main Menu";
-        exitGame.fontSize = 12;
+        exitGame.gameObject.SetActive(false);
+        backToMenu.gameObject.SetActive(true);
     }
 }

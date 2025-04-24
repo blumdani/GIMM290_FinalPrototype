@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BullHealthController : MonoBehaviour
 {
-    public static float health = 4;
+    public float health = 4;
     public Image healthbar;
 
     public void BullDamage()

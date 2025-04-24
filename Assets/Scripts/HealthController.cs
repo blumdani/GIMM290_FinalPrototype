@@ -9,7 +9,7 @@ public class HealthController : MonoBehaviour
 {
     public static HealthController Instance;
     public Image healthbar;
-    public static float health = 80;
+    public float health = 4;
     public CaptureData cd;
     public TMP_Text timeText;
 
@@ -21,7 +21,6 @@ public class HealthController : MonoBehaviour
 
     void Start()
     {
-        health = 80;
         healthbar = GameObject.Find("PlayerHealthGreen").GetComponent<Image>();
         overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 0);
     }
@@ -31,7 +30,6 @@ public class HealthController : MonoBehaviour
         if(health <= 0)
         { 
             Scene scene = SceneManager.GetActiveScene();
-            cd.SaveData("Lost all health in " + scene.name + " scene at " + timeText.text + "\n");
             SceneManager.LoadScene("YouLost");
         }
 
@@ -50,9 +48,8 @@ public class HealthController : MonoBehaviour
 
     public void TakeDamage()
     {
-        cd.SaveData("Took damage at " + timeText.text + "\n");
         overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 1);
-        health -= 20;
-        healthbar.fillAmount = health / 80;
+        health -= 1;
+        healthbar.fillAmount = health / 4;
     }
 }

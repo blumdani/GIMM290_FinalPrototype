@@ -11,8 +11,6 @@ public class LostMenu : MonoBehaviour
     {
         if(this.gameObject.name == "Retry")
         {
-            //Reset the bull health to 140
-            BullHealthController.health = 140;
             SceneManager.LoadScene("Intro_Animation");
         }
         else if(this.gameObject.name == "ExitGame")

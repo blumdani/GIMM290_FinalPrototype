@@ -9,4 +9,6 @@ public abstract class BullBaseState
     public abstract void UpdateState(BullStateManager bull);
 
     public abstract void OnCollisionEnter(BullStateManager bull, Collision collision);
+
+    public abstract void OnTriggerEnter(BullStateManager bull, Collider collider);
 }

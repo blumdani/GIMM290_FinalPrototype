@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 //State for when the bull is charging close to the player (and triggers a runthrough), or collides with the player, arena, or something else.
@@ -16,6 +17,10 @@ public class BullCollidingState : BullBaseState
     private BullHealthController bhc;
     public bool invincible;
     public GameObject player;
+    private GameObject cam;
+    //Determine if the bull has been injured by a target or not
+    private bool targetHit = false;
+
 
     public override void EnterState(BullStateManager bull)
     {
@@ -25,6 +30,7 @@ public class BullCollidingState : BullBaseState
         speed = chargingState.speed;
 
         animator = bull.GetComponent<Animator>();
+        cam = GameObject.FindGameObjectWithTag("MainCamera");
 
 
         hc = GameObject.Find("HealthController").GetComponent<HealthController>();
@@ -70,20 +76,32 @@ public class BullCollidingState : BullBaseState
         if(collision.gameObject.tag == "Arena")
         {
             animator.SetBool("charging", false);
-            bull.SwitchState(bull.resettingState);
-            bhc.BullDamage();
+            if(!targetHit)
+            {
+                bull.SwitchState(bull.resettingState);
+            }
+            else
+            {
+                targetHit = false;
+                bull.SwitchState(bull.injuredState);
+            }
+            /*bhc.BullDamage();
             if(BullHealthController.health <= 0)
             {
                 bull.SwitchState(bull.injuredState);
-            }
+            }*/
         }
+    }
 
-        if(collision.gameObject.tag == "Target")
+    public override void OnTriggerEnter(BullStateManager bull, Collider collider)
+    {
+        if(collider.gameObject.tag == "Target")
         {
-            //Make target inactive
-            collision.gameObject.SetActive(false);
-
-            //To Do: In a target manager, reduce the number of targets by 1 and check if all targets were made inactive.
+            //Destroy the target, move bull to injured state, and shake the camera.
+            Object.Destroy(collider.gameObject);
+            animator.SetBool("charging", false);
+            targetHit = true;
+            cam.GetComponent<CameraShake>().ShakeCamera();
         }
     }
 

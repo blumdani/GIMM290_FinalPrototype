@@ -59,4 +59,9 @@ public class BullChargingState : BullBaseState
     {
         //Collisions will only happen in colliding state
     }
+
+    public override void OnTriggerEnter(BullStateManager bull, Collider collider)
+    {
+        //No trigger events in this state
+    }
 }

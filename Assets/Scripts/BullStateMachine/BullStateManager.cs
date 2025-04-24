@@ -31,6 +31,11 @@ public class BullStateManager : MonoBehaviour
         currentState.OnCollisionEnter(this, collision);
     }
 
+    void OnTriggerEnter(Collider collider)
+    {
+        currentState.OnTriggerEnter(this, collider);
+    }
+
     public void SwitchState(BullBaseState state)
     {
         currentState = state;

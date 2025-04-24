@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 public class TriggerAttack : MonoBehaviour
 {
     public Animator attackAnimator;
-    public GameObject bull;
+    private BullStateManager bull;
     public GameObject sword;
     private GameObject player;
-    public BullHealthController bhc;
+    private BullHealthController bhc;
 
     private float slowDownFactor = 0.0f;
     private float slowDownDuration = 2.5f;
@@ -21,6 +21,8 @@ public class TriggerAttack : MonoBehaviour
         //player = GameObject.FindGameObjectWithTag("Player");
         //player.GetComponent<CharacterController>().enabled = false;
         attackAnimator = sword.GetComponent<Animator>();
+        bhc = GameObject.FindGameObjectWithTag("Bull").GetComponent<BullHealthController>();
+        bull = GameObject.FindGameObjectWithTag("Bull").GetComponent<BullStateManager>();
     }
 
     // Update is called once per frame
@@ -35,17 +37,18 @@ public class TriggerAttack : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Bull") && attackAnimator.GetBool("attacking"))
+        if (collision.gameObject.CompareTag("Bull") && attackAnimator.GetBool("attacking") && bull.GetComponent<BullStateManager>().currentState == bull.GetComponent<BullStateManager>().injuredState)
         {
             Debug.Log("Bull has been hit!");
-            //SlowDown();
-            if(bull.GetComponent<BullStateManager>().currentState == bull.GetComponent<BullStateManager>().injuredState)
+            bhc.BullDamage();
+
+            if (bhc.GetHealth() == 0)
             {
                 StartCoroutine(EndGame());
             }
             else
             {
-                bhc.BullDamage();
+                bull.SwitchState(bull.resettingState);
             }
         }
     }
@@ -64,8 +67,9 @@ public class TriggerAttack : MonoBehaviour
 
     IEnumerator EndGame()
     {
-        Debug.Log("Game should be ending");
+        yield return new WaitForSeconds(.25f);
         Destroy(bull);
+        yield return new WaitForSeconds(.25f);
         SceneManager.LoadScene("YouWon");
         yield return null; // Ensure the method yields a value
     }

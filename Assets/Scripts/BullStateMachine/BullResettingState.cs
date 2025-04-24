@@ -9,6 +9,7 @@ public class BullResettingState : BullBaseState
 {
     public bool isResetting;
     public GameObject player;
+    public Animator anim;
 
     private float delay;
 
@@ -22,6 +23,10 @@ public class BullResettingState : BullBaseState
         bull.dustFront.Stop();
         bull.dustBack.Stop();
         delay = 0;
+
+        //Reset animation if transitioned from injuredState
+        anim = GameObject.FindGameObjectWithTag("Bull").GetComponent<Animator>();
+        anim.SetBool("injured", false);
         
         //Reset bull velocity to zero and add a quick cooldown so the bull is not constantly moving.
         bull.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -57,11 +62,16 @@ public class BullResettingState : BullBaseState
         //Collisions will only happen in colliding state
     }
 
+    public override void OnTriggerEnter(BullStateManager bull, Collider collider)
+    {
+        //No trigger events in this state
+    }
+
     IEnumerator InitialPause(BullStateManager bull)
     {
-        //random delay between 1 and 3 seconds
+        //random delay between 3 and 4 seconds
         System.Random rng = new System.Random();
-        delay = rng.Next(1, 4);
+        delay = rng.Next(3, 5);
 
         yield return new WaitForSeconds(delay);
         isResetting = false;

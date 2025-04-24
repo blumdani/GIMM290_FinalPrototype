@@ -10,15 +10,18 @@ using Unity.VisualScripting;
 public class SelectLevel : MonoBehaviour
 {
     public TextMeshProUGUI instructions;
+    private GameObject title;
+    public TextMeshProUGUI backToMenu;
     public Button controls;
     public Button exitGame;
     public Button playGame;
-    public Button backToMenu;
 
     // Start is called before the first frame update
     void Start()
     {
+        title = GameObject.FindGameObjectWithTag("Title");
         LoadMainMenu();
+        backToMenu.text = "";
     }
 
     // Update is called once per frame
@@ -50,15 +53,19 @@ public class SelectLevel : MonoBehaviour
         controls.gameObject.SetActive(true);
         playGame.gameObject.SetActive(true);
         exitGame.gameObject.SetActive(true);
+        title.SetActive(true);
         backToMenu.gameObject.SetActive(false);
+        backToMenu.text = "";
     }
 
     private void LoadControlsScreen()
     {
-        instructions.text = "WASD - Move \nMouse - Look \nLeft Click - Quick Step \nF - Attack Bull (once injured)";
+        instructions.text = "Move around the arena and dodge the bull. Guide the bull into the targets to injure it, then attack while it is injured. \n\n CONTROLS:\nWASD - Move\nMouse - Look\nLeft Click - Quick Step\nF - Attack Bull (once injured)";
         controls.gameObject.SetActive(false);
         playGame.gameObject.SetActive(false);
         exitGame.gameObject.SetActive(false);
+        title.SetActive(false);
         backToMenu.gameObject.SetActive(true);
+        backToMenu.text = "Back To Menu";
     }
 }

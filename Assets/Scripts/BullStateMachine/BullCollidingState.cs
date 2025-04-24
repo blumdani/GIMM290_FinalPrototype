@@ -85,11 +85,6 @@ public class BullCollidingState : BullBaseState
                 targetHit = false;
                 bull.SwitchState(bull.injuredState);
             }
-            /*bhc.BullDamage();
-            if(BullHealthController.health <= 0)
-            {
-                bull.SwitchState(bull.injuredState);
-            }*/
         }
     }
 

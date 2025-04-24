@@ -9,6 +9,8 @@ TagManager:
   - Bull_Dust_Front
   - Bull_Dust_Back
   - Bull
+  - Title
+  - BackToMenu
   layers:
   - Default
   - TransparentFX

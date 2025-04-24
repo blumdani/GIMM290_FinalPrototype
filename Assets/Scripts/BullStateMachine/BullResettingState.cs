@@ -71,7 +71,7 @@ public class BullResettingState : BullBaseState
     {
         //random delay between 3 and 4 seconds
         System.Random rng = new System.Random();
-        delay = rng.Next(3, 5);
+        delay = rng.Next(2, 4);
 
         yield return new WaitForSeconds(delay);
         isResetting = false;

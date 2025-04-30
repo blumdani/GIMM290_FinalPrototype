@@ -29,7 +29,7 @@ public class BullChargingState : BullBaseState
     
     public override void UpdateState(BullStateManager bull)
     {
-        //Start running, update direction to continue to chase player
+        //Turn on dust particle systems
         if (!bull.dustFront.isPlaying)
         {
             bull.dustFront.Play();
@@ -39,7 +39,7 @@ public class BullChargingState : BullBaseState
             bull.dustBack.Play();
         }
         
-
+        //Start running, update direction to continue to chase player
         direction = (player.transform.position - bull.transform.position).normalized;
         bull.GetComponent<Rigidbody>().velocity = direction * speed;
 

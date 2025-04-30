@@ -31,6 +31,7 @@ public class TriggerAttack : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.F) && !attackAnimator.GetBool("attacking"))
         {
             attackAnimator.SetBool("attacking", true);
+            sword.GetComponent<Collider>().enabled = true;
             StartCoroutine(ResetAttack());
         }
     }
@@ -62,6 +63,7 @@ public class TriggerAttack : MonoBehaviour
     IEnumerator ResetAttack()
     {
         yield return new WaitForSeconds(.45f);
+        sword.GetComponent<Collider>().enabled = false;
         attackAnimator.SetBool("attacking", false);
     }
 

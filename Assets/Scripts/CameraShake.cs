@@ -25,6 +25,6 @@ public class CameraShake : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-        cam.transform.localPosition = Vector3.zero;
+        cam.transform.localPosition = new Vector3(0.01f, 0.46f, -0.24f);
     }
 }
